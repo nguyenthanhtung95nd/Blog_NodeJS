@@ -5,9 +5,7 @@ router.use("/admin", require(__dirname + "/admin"));
 router.use("/blog", require(__dirname + "/blog"));
 
 router.get("/", function (req, res) {
-    res.json({
-        "messsage": "This is Homepage"
-    });
+    res.render("test");
 });
 
 module.exports = router;
