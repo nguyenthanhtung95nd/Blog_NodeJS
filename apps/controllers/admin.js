@@ -1,11 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var user_md = require("../models/user")
+var post_md = require("../models/post")
 var helper = require("../helpers/helper");
 
 router.get("/", function (req, res) {
-    res.json({
-        "message": "This is Admin page"
+    var data = post_md.getAllPosts();
+    data.then(function (posts) {
+        var data = {
+            posts: posts,
+            error: false
+        };
+
+        res.render("admin/dashboard", { data: data });
+    }).catch(function (err) {
+        res.render("admin/dashboard", { data: { error: "Get Post data is Error" } });
     });
 });
 
@@ -73,6 +82,38 @@ router.post("/signin", function (req, res) {
         } else {
             res.render("signin", { data: { error: "User not exists" } });
         }
+    }
+});
+
+router.get("/post/new", function (req, res) {
+    res.render("admin/post/new", { data: { error: false } });
+});
+
+router.post("/post/new", function(req, res){
+    var params = req.body;
+
+    if(params.title.trim().length == 0){
+        var data = {
+            error: "Please enter a title"
+        };
+
+        res.render("admin/post/new", {data: data});
+    }else{
+        var now = new Date();
+        params.created_at = now;
+        params.updated_at = now;
+
+        var data = post_md.addPost(params);
+
+        data.then(function(result){
+            res.redirect("/admin");
+        }).catch(function(err){
+            var data = {
+                error: "Could not insert post"
+            };
+
+            res.render("admin/post/new", {data: data});
+        });
     }
 });
 module.exports = router;
