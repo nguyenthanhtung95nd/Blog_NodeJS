@@ -38,7 +38,22 @@ function getUserByEmail(email) {
     return false;
 }
 
+function getAllUsers() {
+    var defer = q.defer();
+
+    var query = conn.query('SELECT * FROM users', function (err, users) {
+        if (err) {
+            defer.reject(err);
+        } else {
+            defer.resolve(users);
+        }
+    });
+
+    return defer.promise;
+}
+
 module.exports = {
     addUser: addUser,
-    getUserByEmail: getUserByEmail
+    getUserByEmail: getUserByEmail,
+    getAllUsers: getAllUsers
 }
