@@ -21,6 +21,10 @@ app.use(session({
 app.set("views", __dirname + "/apps/views");
 app.set("view engine", "ejs");
 
+// Public folder
+app.use("/static", express.static(__dirname + "/public"));
+
+// Controller
 var controllers = require(__dirname + "/apps/controllers");
 
 app.use(controllers);
