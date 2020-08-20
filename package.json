@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/nguyenthanhtung95nd/Blog_NodeJS#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "config": "^3.1.0",
     "ejs": "^2.6.1",
